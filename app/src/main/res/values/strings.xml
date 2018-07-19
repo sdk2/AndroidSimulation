@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AndroidSimulation</string>
+    <drawable name="clr_normal">#ff6501</drawable>
+    <drawable name="clr_pressed">#a44100</drawable>
 </resources>

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.liangqian8.android.simulation.R;
+import com.liangqian8.android.simulation.program.Pvp.AI5V5Rudiments;
 import com.liangqian8.android.simulation.util.WindowUtil;
 
 public class MainActivity extends Activity {
@@ -38,7 +39,7 @@ public class MainActivity extends Activity {
 
 
         button.setOnClickListener(view -> {
-
+            new Handler().postDelayed(new AI5V5Rudiments(MainActivity.this), 5000);
         });
 
         button2.setOnClickListener(view -> {
