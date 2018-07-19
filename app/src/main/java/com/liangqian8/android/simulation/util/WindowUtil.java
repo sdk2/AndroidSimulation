@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.liangqian8.android.simulation.R;
 
-public class WindowUtil {
+public final class WindowUtil {
     private static final String LOG_TAG = "WindowUtil";
     private static View mView = null;
     private static WindowManager mWindowManager = null;

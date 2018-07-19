@@ -7,7 +7,7 @@ import java.util.Locale;
 /**
  * 用root权限执行Linux下的Shell指令
  */
-public class RootShellCmd {
+public final class RootShellCmd {
 
     private static OutputStream os;
 

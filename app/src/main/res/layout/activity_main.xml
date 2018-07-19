@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/button"
-        android:text="Button2" />
+        android:text="显示悬浮窗" />
 
     <TextView
         android:id="@+id/textView1"
