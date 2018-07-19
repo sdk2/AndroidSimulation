@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -70,23 +69,13 @@ public class WindowUtil {
                 null);
         Button positiveBtn = (Button) view.findViewById(R.id.positiveBtn);
         positiveBtn.setOnClickListener(v -> {
-            Log.i(LOG_TAG, "ok on click");
+            Log.i(LOG_TAG, "you clicked!");
             Toast.makeText(context, "OK!!!", Toast.LENGTH_SHORT).show();
         });
         Button negativeBtn = (Button) view.findViewById(R.id.negativeBtn);
         negativeBtn.setOnClickListener(v -> {
-            Log.i(LOG_TAG, "cancel on click");
+            Log.i(LOG_TAG, "close the window");
             WindowUtil.hidePopupWindow();
-        });
-        // 点击back键可消除
-        view.setOnKeyListener((v, keyCode, event) -> {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_BACK:
-                    WindowUtil.hidePopupWindow();
-                    return true;
-                default:
-                    return false;
-            }
         });
         return view;
     }

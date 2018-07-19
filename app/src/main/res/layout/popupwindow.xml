@@ -28,18 +28,20 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/negativeBtn"
+            android:id="@+id/positiveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="确定" />
+            android:text="点击" />
 
         <Button
-            android:id="@+id/positiveBtn"
+            android:id="@+id/negativeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
             android:layout_weight="1"
-            android:text="取消" />
+            android:text="关闭" />
+
+
     </LinearLayout>
 </LinearLayout>
