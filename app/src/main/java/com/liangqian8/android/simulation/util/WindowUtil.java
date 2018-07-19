@@ -8,7 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.liangqian8.android.simulation.R;
 
@@ -37,12 +38,10 @@ public final class WindowUtil {
                 .getSystemService(Context.WINDOW_SERVICE);
         mView = setUpView(context);
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-        // 类型
         params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-        // int flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
-//        params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
-        params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        // 不设置这个弹出框的透明遮罩显示为黑色
+        int flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL; //the key of back is not working
+        //int flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM; // cannot call input method
+        params.flags = flags;
         params.format = PixelFormat.TRANSLUCENT;
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -67,12 +66,24 @@ public final class WindowUtil {
         Log.i(LOG_TAG, "setUp view");
         View view = LayoutInflater.from(context).inflate(R.layout.popupwindow,
                 null);
+        EditText editText1 = (EditText) view.findViewById(R.id.editText1);
+        EditText editText2 = (EditText) view.findViewById(R.id.editText2);
+        TextView textView = (TextView) view.findViewById(R.id.content);
         Button positiveBtn = (Button) view.findViewById(R.id.positiveBtn);
+        Button negativeBtn = (Button) view.findViewById(R.id.negativeBtn);
         positiveBtn.setOnClickListener(v -> {
             Log.i(LOG_TAG, "you clicked!");
-            Toast.makeText(context, "OK!!!", Toast.LENGTH_SHORT).show();
+            String x = editText1.getText().toString();
+            String y = editText2.getText().toString();
+            textView.setText(x + " " + y);
+            try {
+                int pixel = BitmapUtil.getBitmap().getPixel(Integer.valueOf(x), Integer.valueOf(y));
+                String color = ColorUtil.pixedToColor(pixel);
+                textView.append("\n" + pixel + "  " + color);
+            } catch (NumberFormatException e) {
+
+            }
         });
-        Button negativeBtn = (Button) view.findViewById(R.id.negativeBtn);
         negativeBtn.setOnClickListener(v -> {
             Log.i(LOG_TAG, "close the window");
             WindowUtil.hidePopupWindow();

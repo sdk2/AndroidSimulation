@@ -17,7 +17,7 @@ public class AI5V5Rudiments extends Program {
      * @return
      */
     private boolean assertInIndex() {
-
+//        BitmapUtil.getBitmap().getPixel(10, 1060) == -15320747;
         return false;
     }
 

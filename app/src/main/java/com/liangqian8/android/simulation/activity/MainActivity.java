@@ -36,12 +36,13 @@ public class MainActivity extends Activity {
         textView1 = (TextView) findViewById(R.id.textView1);
         textView1.setMovementMethod(ScrollingMovementMethod.getInstance());
 
+
         button.setOnClickListener(view -> {
 
         });
 
         button2.setOnClickListener(view -> {
-            new Handler().postDelayed(() -> WindowUtil.showPopupWindow(MainActivity.this), 0);
+            new Handler().postDelayed(() -> WindowUtil.showPopupWindow(MainActivity.this), 3000);
         });
     }
 
