@@ -1,10 +1,12 @@
 package com.liangqian8.android.simulation.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -17,6 +19,7 @@ public final class WindowUtil {
     private static final String LOG_TAG = "WindowUtil";
     private static View mView = null;
     private static WindowManager mWindowManager = null;
+    private static WindowManager.LayoutParams params = null;
     private static Boolean isShown = false;
 
     /**
@@ -37,7 +40,7 @@ public final class WindowUtil {
         mWindowManager = (WindowManager) mContext
                 .getSystemService(Context.WINDOW_SERVICE);
         mView = setUpView(context);
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+        params = new WindowManager.LayoutParams();
         params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         int flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL; //the key of back is not working
         //int flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM; // cannot call input method
@@ -62,6 +65,7 @@ public final class WindowUtil {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private static View setUpView(final Context context) {
         Log.i(LOG_TAG, "setUp view");
         View view = LayoutInflater.from(context).inflate(R.layout.popupwindow,
@@ -87,6 +91,30 @@ public final class WindowUtil {
         negativeBtn.setOnClickListener(v -> {
             Log.i(LOG_TAG, "close the window");
             WindowUtil.hidePopupWindow();
+        });
+
+        view.setOnTouchListener(new View.OnTouchListener() {
+            private int lastX;
+            private int lastY;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int rawX = (int) event.getRawX();
+                int rawY = (int) event.getRawY();
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    lastX = rawX;
+                    lastY = rawY;
+                }
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    params.x += rawX - lastX;
+                    params.y += rawY - lastY;
+                    mWindowManager.updateViewLayout(view, params);
+                    lastX = rawX;
+                    lastY = rawY;
+                    return true;
+                }
+                return false;
+            }
         });
         return view;
     }

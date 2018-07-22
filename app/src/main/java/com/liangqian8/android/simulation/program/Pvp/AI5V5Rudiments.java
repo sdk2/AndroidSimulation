@@ -1,6 +1,7 @@
 package com.liangqian8.android.simulation.program.Pvp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.widget.Toast;
 
 import com.liangqian8.android.simulation.program.Program;
@@ -14,10 +15,10 @@ public class AI5V5Rudiments extends Program {
     }
 
     //15 1065
-
     @Override
     public void run() {
         try {
+            Toast.makeText(context, "开始运行...", Toast.LENGTH_SHORT).show();
             // 1.判断是否在游戏首页
             if (BitmapUtil.getBitmap().getPixel(10, 1060) != -15320747) {
                 Toast.makeText(context, "不在游戏首页", Toast.LENGTH_SHORT).show();
@@ -38,26 +39,71 @@ public class AI5V5Rudiments extends Program {
             // 6.开始匹配
             RootShellCmd.simulateTap(1060, 900);
             Thread.sleep(1500);
-            // 7.循环检测是否匹配成功
-            while (true) {
-                if (BitmapUtil.getBitmap().getPixel(700, 850) == -14473158) {
+            // 尝试3次匹配进入游戏
+            int num = 3;
+            while (num-- > 0) {
+                // 7.循环检测是否匹配成功
+                while (true) {
+                    if (BitmapUtil.getBitmap().getPixel(700, 850) == -14473158) {
+                        break;
+                    }
+                }
+                // 8.进入游戏
+                RootShellCmd.simulateTap(950, 850);
+                Thread.sleep(1500);
+                // 判断是否进入游戏成功
+                boolean enterSuccess = false;
+                while (true) {
+                    Bitmap bitmap = BitmapUtil.getBitmap();
+                    // 9.选择英雄界面
+                    if (bitmap.getPixel(1900, 10) == -14464100) {
+                        enterSuccess = true;
+                        break;
+                    }
+                    // 正在匹配的页面
+                    if (bitmap.getPixel(20, 980) == -15260100) {
+                        break;
+                    }
+                }
+                if (enterSuccess) {
                     break;
                 }
             }
-            // 8.进入游戏
-            RootShellCmd.simulateTap(950, 850);
-            Thread.sleep(1500);
-            // 9.循环检测是否进入游戏，等待其它玩家
+            // 10.选择英雄
+            //TODO 450 550 展开
+            //确定 1750 1020
+
+            // 11.进入游戏成功
             while (true) {
-                if (BitmapUtil.getBitmap().getPixel(700, 850) != -14473158) {
+                Bitmap bitmap = BitmapUtil.getBitmap();
+                if (bitmap.getPixel(950, 400) == -10694630 ||
+                        bitmap.getPixel(955, 400) == -10694630 ||
+                        bitmap.getPixel(960, 400) == -10694630) {
                     break;
                 }
             }
-            //TODO 其他玩家没有进入，重新匹配
-            //955 400血条
+
+            // 12.游戏结束，继续
+            while (true) {
+                if (BitmapUtil.getBitmap().getPixel(1000, 1000) == -13136196) {
+                    break;
+                }
+            }
+            // 继续
+            // 返回房间
+            // 开始匹配
         } catch (InterruptedException e) {
 
         }
+    }
+
+    private void method() {
+        // 购买装备
+        RootShellCmd.simulateTap(200, 430);
+        // 加点1技能
+        RootShellCmd.simulateTap(1220, 850);
+        // 加点1技能
+        RootShellCmd.simulateTap(1430, 650);
     }
 
 }
