@@ -85,7 +85,6 @@ public final class WindowUtil {
                 String color = ColorUtil.pixedToColor(pixel);
                 textView.append("\n" + pixel + "  " + color);
             } catch (NumberFormatException e) {
-
             }
         });
         negativeBtn.setOnClickListener(v -> {

@@ -36,9 +36,10 @@ public class AI5V5Rudiments extends Program {
             // 5.入门
             RootShellCmd.simulateTap(420, 380);
             Thread.sleep(3000);
-            // 6.开始匹配
+            // 6.点击开始匹配
             RootShellCmd.simulateTap(1060, 900);
             Thread.sleep(1500);
+
             // 尝试3次匹配进入游戏
             int num = 3;
             while (num-- > 0) {
@@ -48,12 +49,15 @@ public class AI5V5Rudiments extends Program {
                         break;
                     }
                 }
-                // 8.进入游戏
+                // 8.点击进入游戏
                 RootShellCmd.simulateTap(950, 850);
                 Thread.sleep(1500);
-                // 判断是否进入游戏成功
+                // 判断是否进入游戏成功，因为可能其他人拒绝游戏
                 boolean enterSuccess = false;
                 while (true) {
+                    // 此时有两种情况
+                    // (1)选择英雄界面为进入成功
+                    // (2)返回匹配队列，这种情况只需检测匹配成功的界面即可
                     Bitmap bitmap = BitmapUtil.getBitmap();
                     // 9.选择英雄界面
                     if (bitmap.getPixel(1900, 10) == -14464100) {
