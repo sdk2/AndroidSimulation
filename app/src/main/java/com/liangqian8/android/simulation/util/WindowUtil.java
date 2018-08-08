@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.liangqian8.android.simulation.R;
+import com.liangqian8.android.simulation.program.Pvp.AI5V5Rudiments;
 
 public final class WindowUtil {
     private static final String LOG_TAG = "WindowUtil";
@@ -64,7 +65,7 @@ public final class WindowUtil {
             isShown = false;
         }
     }
-
+    static AI5V5Rudiments ai5V5Rudiments = null;
     @SuppressLint("ClickableViewAccessibility")
     private static View setUpView(final Context context) {
         Log.i(LOG_TAG, "setUp view");
@@ -74,6 +75,8 @@ public final class WindowUtil {
         EditText editText2 = (EditText) view.findViewById(R.id.editText2);
         TextView textView = (TextView) view.findViewById(R.id.content);
         Button positiveBtn = (Button) view.findViewById(R.id.positiveBtn);
+        Button guajiBtn = (Button) view.findViewById(R.id.guajiBtn);
+        Button stopguajiBtn = (Button) view.findViewById(R.id.stopguajiBtn);
         Button negativeBtn = (Button) view.findViewById(R.id.negativeBtn);
         positiveBtn.setOnClickListener(v -> {
             Log.i(LOG_TAG, "you clicked!");
@@ -86,6 +89,15 @@ public final class WindowUtil {
                 textView.append("\n" + pixel + "  " + color);
             } catch (NumberFormatException e) {
             }
+        });
+
+        guajiBtn.setOnClickListener(v -> {
+            ai5V5Rudiments = new AI5V5Rudiments(view.getContext());
+            Runnable r = () -> ai5V5Rudiments.runTemp();
+            new Thread(r).start();
+        });
+        stopguajiBtn.setOnClickListener(v -> {
+            ai5V5Rudiments.stopTemp();
         });
         negativeBtn.setOnClickListener(v -> {
             Log.i(LOG_TAG, "close the window");

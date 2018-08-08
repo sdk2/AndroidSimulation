@@ -1,5 +1,7 @@
 package com.liangqian8.android.simulation.util;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Locale;

@@ -51,6 +51,22 @@
             android:text="点击" />
 
         <Button
+            android:id="@+id/guajiBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:text="挂机" />
+
+        <Button
+            android:id="@+id/stopguajiBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:text="停止" />
+
+        <Button
             android:id="@+id/negativeBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

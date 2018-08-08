@@ -101,13 +101,62 @@ public class AI5V5Rudiments extends Program {
         }
     }
 
-    private void method() {
+    private boolean stop = false;
+
+    public void runTemp() {
+        try {
+            int temp1 = 2;
+            while (temp1-- > 0) {
+                if (stop) break;
+                // 装备 + 1,2技能
+                RootShellCmd.simulateTap(200, 430);
+                Thread.sleep(1000);
+                RootShellCmd.simulateTap(200, 430);
+                Thread.sleep(1000);
+                RootShellCmd.simulateTap(1320, 840);
+                Thread.sleep(1000);
+                RootShellCmd.simulateTap(1440, 650);
+                Thread.sleep(1000);
+                // 出门（下路）
+                RootShellCmd.simulateSwipe(300, 850, 530, 895, 16000 + 3000);
+                // 普攻
+                int temp = 20;
+                while (temp-- > 0) {
+                    RootShellCmd.simulateTap(1420, 950);
+                    RootShellCmd.simulateTap(1740, 920);
+                    Thread.sleep(2000);
+                }
+                // 回城
+                RootShellCmd.simulateTap(960, 990);
+                Thread.sleep(10000);
+                RootShellCmd.simulateTap(960, 990);
+                Thread.sleep(10000);
+                Thread.sleep(5000);
+            }
+            while (true) {
+                if (stop) break;
+                RootShellCmd.simulateTap(200, 430);
+                RootShellCmd.simulateTap(960, 990);
+                Thread.sleep(10000);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void stopTemp() {
+        stop = true;
+    }
+
+    private void method() throws InterruptedException {
         // 购买装备
         RootShellCmd.simulateTap(200, 430);
+        Thread.sleep(1000);
         // 加点1技能
-        RootShellCmd.simulateTap(1220, 850);
-        // 加点1技能
-        RootShellCmd.simulateTap(1430, 650);
+        RootShellCmd.simulateTap(1320, 840);
+        Thread.sleep(1000);
+        // 加点2技能
+        RootShellCmd.simulateTap(1440, 650);
     }
 
 }
