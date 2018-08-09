@@ -76,6 +76,7 @@ public final class WindowUtil {
         TextView textView = (TextView) view.findViewById(R.id.content);
         Button positiveBtn = (Button) view.findViewById(R.id.positiveBtn);
         Button guajiBtn = (Button) view.findViewById(R.id.guajiBtn);
+        Button guaji2Btn = (Button) view.findViewById(R.id.guaji2Btn);
         Button stopguajiBtn = (Button) view.findViewById(R.id.stopguajiBtn);
         Button negativeBtn = (Button) view.findViewById(R.id.negativeBtn);
         positiveBtn.setOnClickListener(v -> {
@@ -93,7 +94,12 @@ public final class WindowUtil {
 
         guajiBtn.setOnClickListener(v -> {
             ai5V5Rudiments = new AI5V5Rudiments(view.getContext());
-            Runnable r = () -> ai5V5Rudiments.runTemp();
+            Runnable r = () -> ai5V5Rudiments.runTemp(1);
+            new Thread(r).start();
+        });
+        guaji2Btn.setOnClickListener(v -> {
+            ai5V5Rudiments = new AI5V5Rudiments(view.getContext());
+            Runnable r = () -> ai5V5Rudiments.runTemp(2);
             new Thread(r).start();
         });
         stopguajiBtn.setOnClickListener(v -> {

@@ -45,6 +45,13 @@ public final class RootShellCmd {
     }
 
     /**
+     * 后台模拟屏幕长按
+     */
+    public static void simulateTap(int x, int y, int t) {
+        exec(String.format(Locale.CHINA, "input swipe %d %d %d %d %d\n", x, y, x, y, t));
+    }
+
+    /**
      * 后台模拟屏幕滑动
      */
     public static void simulateSwipe(int x1, int y1, int x2, int y2, int t) {
