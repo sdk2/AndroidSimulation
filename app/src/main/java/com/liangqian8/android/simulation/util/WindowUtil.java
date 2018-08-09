@@ -30,7 +30,6 @@ public final class WindowUtil {
      */
     public static void showPopupWindow(final Context context) {
         if (isShown) {
-            Log.i(LOG_TAG, "return cause already shown");
             return;
         }
         isShown = true;
@@ -51,21 +50,20 @@ public final class WindowUtil {
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.gravity = Gravity.CENTER;
         mWindowManager.addView(mView, params);
-        Log.i(LOG_TAG, "add view");
     }
 
     /**
      * 隐藏弹出框
      */
     public static void hidePopupWindow() {
-        Log.i(LOG_TAG, "hide " + isShown + ", " + mView);
         if (isShown && null != mView) {
-            Log.i(LOG_TAG, "hidePopupWindow");
             mWindowManager.removeView(mView);
             isShown = false;
         }
     }
+
     static AI5V5Rudiments ai5V5Rudiments = null;
+
     @SuppressLint("ClickableViewAccessibility")
     private static View setUpView(final Context context) {
         Log.i(LOG_TAG, "setUp view");
@@ -80,7 +78,6 @@ public final class WindowUtil {
         Button stopguajiBtn = (Button) view.findViewById(R.id.stopguajiBtn);
         Button negativeBtn = (Button) view.findViewById(R.id.negativeBtn);
         positiveBtn.setOnClickListener(v -> {
-            Log.i(LOG_TAG, "you clicked!");
             String x = editText1.getText().toString();
             String y = editText2.getText().toString();
             textView.setText(x + " " + y);
@@ -94,13 +91,16 @@ public final class WindowUtil {
 
         guajiBtn.setOnClickListener(v -> {
             ai5V5Rudiments = new AI5V5Rudiments(view.getContext());
-            Runnable r = () -> ai5V5Rudiments.runTemp(1);
+
+            Runnable r = new Runnable() {
+                @Override
+                public void run() {
+                    ai5V5Rudiments.runTemp(editText1);
+                }
+            };
             new Thread(r).start();
         });
         guaji2Btn.setOnClickListener(v -> {
-            ai5V5Rudiments = new AI5V5Rudiments(view.getContext());
-            Runnable r = () -> ai5V5Rudiments.runTemp(2);
-            new Thread(r).start();
         });
         stopguajiBtn.setOnClickListener(v -> {
             ai5V5Rudiments.stopTemp();
