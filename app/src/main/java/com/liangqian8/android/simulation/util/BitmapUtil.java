@@ -49,15 +49,14 @@ public final class BitmapUtil {
      * @return
      */
     private static boolean blockByFileLength() {
-        int attempts = 20;
+        int attempts = 10;
         int num = 0;
         while (num++ < attempts) {
             try {
-                TimeUnit.MILLISECONDS.sleep(1000);
+                TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Log.i(LOG_TAG, "attempt to " + num + " times");
             if (file.length() != 0) {
                 return true;
             }
