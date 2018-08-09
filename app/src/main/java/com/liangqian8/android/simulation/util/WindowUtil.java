@@ -3,6 +3,7 @@ package com.liangqian8.android.simulation.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -101,6 +102,8 @@ public final class WindowUtil {
             new Thread(r).start();
         });
         guaji2Btn.setOnClickListener(v -> {
+//            new Thread(new AI5V5Rudiments(view.getContext())).start();
+            new Handler().post(new AI5V5Rudiments(view.getContext()));
         });
         stopguajiBtn.setOnClickListener(v -> {
             ai5V5Rudiments.stopTemp();

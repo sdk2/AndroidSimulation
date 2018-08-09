@@ -2,6 +2,7 @@ package com.liangqian8.android.simulation.program.Pvp;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -11,11 +12,12 @@ import com.liangqian8.android.simulation.util.RootShellCmd;
 
 public class AI5V5Rudiments extends Program {
 
+    private static final String LOG_TAG = "AI5V5";
+
     public AI5V5Rudiments(Context context) {
         super(context);
     }
 
-    //15 1065
     @Override
     public void run() {
         try {
@@ -33,12 +35,13 @@ public class AI5V5Rudiments extends Program {
             Thread.sleep(1500);
             // 4.王者峡谷
             RootShellCmd.simulateTap(420, 380);
-            Thread.sleep(1000);
+            Thread.sleep(500);
             // 5.入门
             RootShellCmd.simulateTap(420, 380);
             Thread.sleep(3000);
             // 6.点击开始匹配
             RootShellCmd.simulateTap(1060, 900);
+            Log.i(LOG_TAG, "start match");
             Thread.sleep(1500);
 
             // 尝试3次匹配进入游戏
@@ -47,11 +50,13 @@ public class AI5V5Rudiments extends Program {
                 // 7.循环检测是否匹配成功
                 while (true) {
                     if (BitmapUtil.getBitmap().getPixel(700, 850) == -14473158) {
+                        Log.i(LOG_TAG, "match success");
                         break;
                     }
                 }
                 // 8.点击进入游戏
                 RootShellCmd.simulateTap(950, 850);
+                Log.i(LOG_TAG, "touch enter");
                 Thread.sleep(1500);
                 // 判断是否进入游戏成功，因为可能其他人拒绝游戏
                 boolean enterSuccess = false;
@@ -62,11 +67,13 @@ public class AI5V5Rudiments extends Program {
                     Bitmap bitmap = BitmapUtil.getBitmap();
                     // 9.选择英雄界面
                     if (bitmap.getPixel(1900, 10) == -14464100) {
+                        Log.i(LOG_TAG, "enter success");
                         enterSuccess = true;
                         break;
                     }
                     // 正在匹配的页面
                     if (bitmap.getPixel(20, 980) == -15260100) {
+                        Log.i(LOG_TAG, "enter fail, in matching");
                         break;
                     }
                 }
@@ -78,9 +85,10 @@ public class AI5V5Rudiments extends Program {
             //TODO 450 550 展开
             //确定 1750 1020
 
-            // 11.进入游戏成功
+            // 11.进入游戏画面
             while (true) {
                 Bitmap bitmap = BitmapUtil.getBitmap();
+                // 血条绿色
                 if (bitmap.getPixel(950, 400) == -10694630 ||
                         bitmap.getPixel(955, 400) == -10694630 ||
                         bitmap.getPixel(960, 400) == -10694630) {
