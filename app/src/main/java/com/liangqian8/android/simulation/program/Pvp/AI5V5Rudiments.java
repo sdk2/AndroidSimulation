@@ -10,6 +10,7 @@ import com.liangqian8.android.simulation.util.RootShellCmd;
 public class AI5V5Rudiments extends Program {
 
     private static final String LOG_TAG = "AI5V5";
+    private int goTime = 0;
 
     public AI5V5Rudiments() {
     }
@@ -44,7 +45,7 @@ public class AI5V5Rudiments extends Program {
                 while (true) {
                     // 7.点击进入游戏
                     RootShellCmd.simulateTap(950, 850);
-                    Thread.sleep(1500);
+                    Thread.sleep(4000);
                     // 8.选择英雄界面
                     if (BitmapUtil.getBitmap().getPixel(1900, 10) == -14464100) {
                         Log.i(LOG_TAG, "enter success");
@@ -54,8 +55,13 @@ public class AI5V5Rudiments extends Program {
                 // 9.选择英雄
                 //TODO 450 550 展开
 
-                // 达摩
-                RootShellCmd.simulateTap(105, 900);
+                RootShellCmd.simulateTap(450, 550);
+                Thread.sleep(1500);
+                RootShellCmd.simulateTap(123, 660);
+                Thread.sleep(2000);
+                RootShellCmd.simulateTap(450, 550);
+                Thread.sleep(1500);
+                RootShellCmd.simulateTap(522, 888);
                 Thread.sleep(2000);
                 // 10.确定
                 RootShellCmd.simulateTap(1750, 1020);
@@ -72,7 +78,7 @@ public class AI5V5Rudiments extends Program {
                 }
 
                 // 12.游戏内部操作
-                runInGame(0);
+                runInGame();
                 if (Thread.currentThread().isInterrupted()) {
                     break;
                 }
@@ -87,7 +93,7 @@ public class AI5V5Rudiments extends Program {
         }
     }
 
-    public void runInGame(int goTime) {
+    public void runInGame() {
         if (goTime == 0) goTime = 19000;
         try {
             int temp1 = 2;
@@ -104,13 +110,16 @@ public class AI5V5Rudiments extends Program {
                 // 出门（下路）
                 RootShellCmd.simulateSwipe(300, 850, 530, 895, goTime);
                 Thread.sleep(goTime);
-                RootShellCmd.simulateSwipe(300, 850, 300, 800, 1000);
-                Thread.sleep(1000);
+                RootShellCmd.simulateSwipe(300, 850, 300, 700, 1500);
+                Thread.sleep(1500);
                 // 普攻
                 int temp = 8;
                 while (temp-- > 0) {
                     RootShellCmd.simulateTap(1740, 920, 200);
                     Thread.sleep(3000);
+                    if (Thread.currentThread().isInterrupted()) {
+                        break;
+                    }
                 }
                 // 回城
                 RootShellCmd.simulateTap(960, 990);
@@ -122,13 +131,16 @@ public class AI5V5Rudiments extends Program {
                 RootShellCmd.simulateTap(200, 430);
                 RootShellCmd.simulateTap(960, 990);
                 Thread.sleep(10000);
-                Bitmap bitmap = BitmapUtil.getBitmap();
-                // 右下角和开始匹配
-                if (bitmap.getPixel(1910, 1070) == -14474451 &&
-                        bitmap.getPixel(1060, 900) == -1062525) {
+
+                int bitmap = BitmapUtil.getBitmap().getPixel(1910, 1070);
+                if (bitmap == -14474451) { // 开始匹配
                     break;
-                }
-                if (Thread.currentThread().isInterrupted()) {
+                } else if (bitmap == -16379875) { // 继续 + 继续 + 返回房间
+                    int temp = 3;
+                    while (temp-- > 0) {
+                        RootShellCmd.simulateTap(960, 990);
+                        Thread.sleep(2000);
+                    }
                     break;
                 }
             }
@@ -146,6 +158,10 @@ public class AI5V5Rudiments extends Program {
         Thread.sleep(1000);
         // 加点2技能
         RootShellCmd.simulateTap(1440, 650);
+    }
+
+    public void setGoTime(int goTime) {
+        this.goTime = goTime;
     }
 
 }

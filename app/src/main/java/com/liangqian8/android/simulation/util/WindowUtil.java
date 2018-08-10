@@ -24,7 +24,7 @@ public final class WindowUtil {
     private static WindowManager.LayoutParams params = null;
     private static Boolean isShown = false;
     private static Thread thread = null;
-    private static Runnable runnable = new AI5V5Rudiments();
+    private static AI5V5Rudiments runnable = new AI5V5Rudiments();
 
     /**
      * 显示弹出框
@@ -94,6 +94,7 @@ public final class WindowUtil {
 
         guajiBtn.setOnClickListener(v -> {
             if (thread == null) {
+                setGoTime(editText1);
                 thread = new Thread(runnable);
                 thread.start();
                 guajiBtn.setText("停止");
@@ -135,6 +136,15 @@ public final class WindowUtil {
             }
         });
         return view;
+    }
+
+    private static void setGoTime(EditText editText1) {
+        try {
+            int goTime = Integer.parseInt(editText1.getText().toString());
+            if (goTime >= 12000 && goTime <= 25000)
+                runnable.setGoTime(goTime);
+        } catch (NumberFormatException e) {
+        }
     }
 
 }
