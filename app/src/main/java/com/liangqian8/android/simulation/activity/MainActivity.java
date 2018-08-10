@@ -39,7 +39,6 @@ public class MainActivity extends Activity {
 
 
         button.setOnClickListener(view -> {
-            new Handler().postDelayed(new AI5V5Rudiments(MainActivity.this), 5000);
         });
 
         button2.setOnClickListener(view -> {

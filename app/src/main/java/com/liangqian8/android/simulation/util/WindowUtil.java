@@ -23,6 +23,8 @@ public final class WindowUtil {
     private static WindowManager mWindowManager = null;
     private static WindowManager.LayoutParams params = null;
     private static Boolean isShown = false;
+    private static Thread thread = null;
+    private static Runnable runnable = new AI5V5Rudiments();
 
     /**
      * 显示弹出框
@@ -91,25 +93,21 @@ public final class WindowUtil {
         });
 
         guajiBtn.setOnClickListener(v -> {
-            ai5V5Rudiments = new AI5V5Rudiments(view.getContext());
-
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    ai5V5Rudiments.runTemp(editText1);
-                }
-            };
-            new Thread(r).start();
+            if (thread == null) {
+                thread = new Thread(runnable);
+                thread.start();
+                guajiBtn.setText("停止");
+            } else {
+                thread.interrupt();
+                thread = null;
+                guajiBtn.setText("挂机");
+            }
         });
         guaji2Btn.setOnClickListener(v -> {
-//            new Thread(new AI5V5Rudiments(view.getContext())).start();
-            new Handler().post(new AI5V5Rudiments(view.getContext()));
         });
         stopguajiBtn.setOnClickListener(v -> {
-            ai5V5Rudiments.stopTemp();
         });
         negativeBtn.setOnClickListener(v -> {
-            Log.i(LOG_TAG, "close the window");
             WindowUtil.hidePopupWindow();
         });
 

@@ -1,10 +1,7 @@
 package com.liangqian8.android.simulation.program.Pvp;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.liangqian8.android.simulation.program.Program;
 import com.liangqian8.android.simulation.util.BitmapUtil;
@@ -14,17 +11,14 @@ public class AI5V5Rudiments extends Program {
 
     private static final String LOG_TAG = "AI5V5";
 
-    public AI5V5Rudiments(Context context) {
-        super(context);
+    public AI5V5Rudiments() {
     }
 
     @Override
     public void run() {
         try {
-            Toast.makeText(context, "开始运行...", Toast.LENGTH_SHORT).show();
             // 1.判断是否在游戏首页
             if (BitmapUtil.getBitmap().getPixel(10, 1060) != -15320747) {
-                Toast.makeText(context, "不在游戏首页", Toast.LENGTH_SHORT).show();
                 return;
             }
             // 2.对战模式
@@ -40,56 +34,30 @@ public class AI5V5Rudiments extends Program {
             RootShellCmd.simulateTap(420, 380);
             Thread.sleep(3000);
 
+            // 一直挂机直到终止运行
             while (true) {
                 // 6.点击开始匹配
                 RootShellCmd.simulateTap(1060, 900);
                 Log.i(LOG_TAG, "start match");
                 Thread.sleep(1500);
 
-                // 尝试3次匹配进入游戏
-                int num = 3;
-                while (num-- > 0) {
-                    // 7.循环检测是否匹配成功
-                    //TODO 可以一直点击进入游戏，检测是匹配界面则等待，选择英雄界面则继续
-                    while (true) {
-                        if (BitmapUtil.getBitmap().getPixel(700, 850) == -14473158) {
-                            Log.i(LOG_TAG, "match success");
-                            break;
-                        }
-                    }
-                    // 8.点击进入游戏
+                while (true) {
+                    // 7.点击进入游戏
                     RootShellCmd.simulateTap(950, 850);
-                    Log.i(LOG_TAG, "touch enter");
                     Thread.sleep(1500);
-                    // 判断是否进入游戏成功，因为可能其他人拒绝游戏
-                    boolean enterSuccess = false;
-                    while (true) {
-                        // 此时有两种情况
-                        // (1)选择英雄界面为进入成功
-                        // (2)返回匹配队列，这种情况只需检测匹配成功的界面即可
-                        Bitmap bitmap = BitmapUtil.getBitmap();
-                        // 9.选择英雄界面
-                        if (bitmap.getPixel(1900, 10) == -14464100) {
-                            Log.i(LOG_TAG, "enter success");
-                            enterSuccess = true;
-                            break;
-                        }
-                        // 正在匹配的页面
-                        if (bitmap.getPixel(20, 980) == -15260100) {
-                            Log.i(LOG_TAG, "enter fail, in matching");
-                            break;
-                        }
-                    }
-                    if (enterSuccess) {
+                    // 8.选择英雄界面
+                    if (BitmapUtil.getBitmap().getPixel(1900, 10) == -14464100) {
+                        Log.i(LOG_TAG, "enter success");
                         break;
                     }
                 }
-                // 10.选择英雄
+                // 9.选择英雄
                 //TODO 450 550 展开
 
-                // 达摩 确定
+                // 达摩
                 RootShellCmd.simulateTap(105, 900);
                 Thread.sleep(2000);
+                // 10.确定
                 RootShellCmd.simulateTap(1750, 1020);
 
                 // 11.进入游戏画面
@@ -103,20 +71,10 @@ public class AI5V5Rudiments extends Program {
                     }
                 }
 
-                // 回城 + 继续 + 继续 + 返回房间
-                int x = 1;
-                while (true) {
-                    RootShellCmd.simulateTap(960, 990);
-                    Thread.sleep(10000);
-                    x++;
-                    if (x % 5 == 0) {
-                        Bitmap bitmap = BitmapUtil.getBitmap();
-                        // 右下角和开始匹配
-                        if (bitmap.getPixel(1910, 1070) == -14474451 &&
-                                bitmap.getPixel(1060, 900) == -1062527) {
-                            break;
-                        }
-                    }
+                // 12.游戏内部操作
+                runInGame(0);
+                if (Thread.currentThread().isInterrupted()) {
+                    break;
                 }
             }
 
@@ -129,20 +87,11 @@ public class AI5V5Rudiments extends Program {
         }
     }
 
-    private boolean stop = false;
-
-    public void runTemp(EditText e) {
-        String x = e.getText().toString();
-        int goTime = 0;
-        try {
-            goTime = Integer.parseInt(x);
-        } catch (NumberFormatException ex) {
-        }
+    public void runInGame(int goTime) {
         if (goTime == 0) goTime = 19000;
         try {
             int temp1 = 2;
             while (temp1-- > 0) {
-                if (stop) break;
                 // 装备 + 1,2技能
                 RootShellCmd.simulateTap(200, 430);
                 Thread.sleep(1);
@@ -155,10 +104,11 @@ public class AI5V5Rudiments extends Program {
                 // 出门（下路）
                 RootShellCmd.simulateSwipe(300, 850, 530, 895, goTime);
                 Thread.sleep(goTime);
+                RootShellCmd.simulateSwipe(300, 850, 300, 800, 1000);
+                Thread.sleep(1000);
                 // 普攻
                 int temp = 8;
                 while (temp-- > 0) {
-                    if (stop) return;
                     RootShellCmd.simulateTap(1740, 920, 200);
                     Thread.sleep(3000);
                 }
@@ -169,18 +119,22 @@ public class AI5V5Rudiments extends Program {
                 Thread.sleep(10000);
             }
             while (true) {
-                if (stop) return;
                 RootShellCmd.simulateTap(200, 430);
                 RootShellCmd.simulateTap(960, 990);
                 Thread.sleep(10000);
+                Bitmap bitmap = BitmapUtil.getBitmap();
+                // 右下角和开始匹配
+                if (bitmap.getPixel(1910, 1070) == -14474451 &&
+                        bitmap.getPixel(1060, 900) == -1062525) {
+                    break;
+                }
+                if (Thread.currentThread().isInterrupted()) {
+                    break;
+                }
             }
-        } catch (InterruptedException ee) {
-            ee.printStackTrace();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
-    }
-
-    public void stopTemp() {
-        stop = true;
     }
 
     private void method() throws InterruptedException {

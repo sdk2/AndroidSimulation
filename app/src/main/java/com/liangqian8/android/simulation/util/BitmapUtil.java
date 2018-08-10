@@ -3,6 +3,7 @@ package com.liangqian8.android.simulation.util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -19,7 +20,6 @@ public final class BitmapUtil {
     private static final String fileName = Environment.getExternalStorageDirectory() + "/screenshot.jpg";
     private static final File file = new File(fileName);
 
-    @Nullable
     public static Bitmap getBitmap() {
         try {
             screenshot();
@@ -55,7 +55,7 @@ public final class BitmapUtil {
             try {
                 TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
             if (file.length() != 0) {
                 return true;
