@@ -10,7 +10,12 @@ import com.liangqian8.android.simulation.util.RootShellCmd;
 public class AI5V5Rudiments extends Program {
 
     private static final String LOG_TAG = "AI5V5";
+    private static final int heroListX = 105;
+    private static final int heroListY = 235;
+    private static final int heroListOffsetX = 195;
+    private static final int heroListOffsetY = 210;
     private int goTime = 0;
+    private int[][] hero;
 
     public AI5V5Rudiments() {
     }
@@ -56,12 +61,12 @@ public class AI5V5Rudiments extends Program {
                 //TODO 450 550 展开
 
                 RootShellCmd.simulateTap(450, 550);
-                Thread.sleep(1500);
+                Thread.sleep(2000);
                 RootShellCmd.simulateTap(123, 660);
                 Thread.sleep(2000);
                 RootShellCmd.simulateTap(450, 550);
                 Thread.sleep(1500);
-                RootShellCmd.simulateTap(522, 888);
+                RootShellCmd.simulateTap(1290, 688);
                 Thread.sleep(2000);
                 // 10.确定
                 RootShellCmd.simulateTap(1750, 1020);
@@ -74,6 +79,9 @@ public class AI5V5Rudiments extends Program {
                             bitmap.getPixel(955, 400) == -10694630 ||
                             bitmap.getPixel(960, 400) == -10694630) {
                         break;
+                    }
+                    if (Thread.currentThread().isInterrupted()) {
+                        return;
                     }
                 }
 
@@ -98,6 +106,9 @@ public class AI5V5Rudiments extends Program {
         try {
             int temp1 = 2;
             while (temp1-- > 0) {
+                if (Thread.currentThread().isInterrupted()) {
+                    return;
+                }
                 // 装备 + 1,2技能
                 RootShellCmd.simulateTap(200, 430);
                 Thread.sleep(1);
@@ -164,4 +175,20 @@ public class AI5V5Rudiments extends Program {
         this.goTime = goTime;
     }
 
+    public void setHero(int[][] hero) {
+        this.hero = hero;
+    }
+
+    public void temp() {
+        try {
+            for (int[] ints : hero) {
+                RootShellCmd.simulateTap(450, 550);
+                Thread.sleep(2000);
+                RootShellCmd.simulateTap(heroListX + ints[0] * heroListOffsetX, heroListY + ints[1] * heroListOffsetY);
+                Thread.sleep(2000);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

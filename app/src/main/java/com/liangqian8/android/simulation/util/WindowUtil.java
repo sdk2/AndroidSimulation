@@ -65,8 +65,6 @@ public final class WindowUtil {
         }
     }
 
-    static AI5V5Rudiments ai5V5Rudiments = null;
-
     @SuppressLint("ClickableViewAccessibility")
     private static View setUpView(final Context context) {
         Log.i(LOG_TAG, "setUp view");
@@ -74,11 +72,11 @@ public final class WindowUtil {
                 null);
         EditText editText1 = (EditText) view.findViewById(R.id.editText1);
         EditText editText2 = (EditText) view.findViewById(R.id.editText2);
+        EditText editText3 = (EditText) view.findViewById(R.id.editText3);
         TextView textView = (TextView) view.findViewById(R.id.content);
         Button positiveBtn = (Button) view.findViewById(R.id.positiveBtn);
         Button guajiBtn = (Button) view.findViewById(R.id.guajiBtn);
-        Button guaji2Btn = (Button) view.findViewById(R.id.guaji2Btn);
-        Button stopguajiBtn = (Button) view.findViewById(R.id.stopguajiBtn);
+        Button tempBtn = (Button) view.findViewById(R.id.tempBtn);
         Button negativeBtn = (Button) view.findViewById(R.id.negativeBtn);
         positiveBtn.setOnClickListener(v -> {
             String x = editText1.getText().toString();
@@ -95,6 +93,7 @@ public final class WindowUtil {
         guajiBtn.setOnClickListener(v -> {
             if (thread == null) {
                 setGoTime(editText1);
+                setHero(editText3);
                 thread = new Thread(runnable);
                 thread.start();
                 guajiBtn.setText("停止");
@@ -104,13 +103,10 @@ public final class WindowUtil {
                 guajiBtn.setText("挂机");
             }
         });
-        guaji2Btn.setOnClickListener(v -> {
+        tempBtn.setOnClickListener(v -> {
+
         });
-        stopguajiBtn.setOnClickListener(v -> {
-        });
-        negativeBtn.setOnClickListener(v -> {
-            WindowUtil.hidePopupWindow();
-        });
+        negativeBtn.setOnClickListener(v -> WindowUtil.hidePopupWindow());
 
         view.setOnTouchListener(new View.OnTouchListener() {
             private int lastX;
@@ -143,6 +139,22 @@ public final class WindowUtil {
             int goTime = Integer.parseInt(editText1.getText().toString());
             if (goTime >= 12000 && goTime <= 25000)
                 runnable.setGoTime(goTime);
+        } catch (NumberFormatException e) {
+        }
+    }
+
+    private static void setHero(EditText editText3) {
+        String s = editText3.getText().toString();
+        try {
+            String[] split = s.split(" ");
+            int len = split.length;
+            int hero[][] = new int[len / 2][];
+            for (int i = 0; i < hero.length; i++) {
+                hero[i] = new int[2];
+                hero[i][0] = Integer.parseInt(split[i * 2]) - 1;
+                hero[i][1] = Integer.parseInt(split[i * 2 + 1]) - 1;
+            }
+            runnable.setHero(hero);
         } catch (NumberFormatException e) {
         }
     }

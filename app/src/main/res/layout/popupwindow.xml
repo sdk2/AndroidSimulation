@@ -28,6 +28,12 @@
             android:layout_weight="1"
             android:ems="4"
             android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <TextView
@@ -48,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_selector"
-            android:text="点击" />
+            android:text="颜色" />
 
         <Button
             android:id="@+id/guajiBtn"
@@ -59,20 +65,12 @@
             android:text="挂机" />
 
         <Button
-            android:id="@+id/guaji2Btn"
+            android:id="@+id/tempBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_selector"
-            android:text="挂机2" />
-
-        <Button
-            android:id="@+id/stopguajiBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/button_selector"
-            android:text="停止" />
+            android:text="功能" />
 
         <Button
             android:id="@+id/negativeBtn"

@@ -18,6 +18,8 @@ import com.liangqian8.android.simulation.R;
 import com.liangqian8.android.simulation.program.Pvp.AI5V5Rudiments;
 import com.liangqian8.android.simulation.util.WindowUtil;
 
+import java.io.IOException;
+
 public class MainActivity extends Activity {
 
     private Button button;
@@ -31,6 +33,11 @@ public class MainActivity extends Activity {
         if (!hasPermission(MainActivity.this)) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
+        try {
+            Runtime.getRuntime().exec("su");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         button = (Button) findViewById(R.id.button);
         button2 = (Button) findViewById(R.id.button2);

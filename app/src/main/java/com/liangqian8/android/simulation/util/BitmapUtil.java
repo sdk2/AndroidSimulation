@@ -3,8 +3,6 @@ package com.liangqian8.android.simulation.util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
@@ -25,7 +23,7 @@ public final class BitmapUtil {
             screenshot();
             if (!blockByFileLength()) {
                 Log.e(LOG_TAG, "file.length() == 0");
-                return null;
+                return Bitmap.createBitmap(1920,1080, Bitmap.Config.ALPHA_8);
             }
             Bitmap bitmap;
             try (FileInputStream inputStream = new FileInputStream(file)) {
@@ -34,7 +32,7 @@ public final class BitmapUtil {
             }
             if (bitmap == null) {
                 Log.e(LOG_TAG, "bitmap == null");
-                return null;
+                return Bitmap.createBitmap(1920,1080, Bitmap.Config.ALPHA_8);
             }
             return bitmap;
         } catch (Exception e) {
@@ -56,6 +54,7 @@ public final class BitmapUtil {
                 TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
+                return false;
             }
             if (file.length() != 0) {
                 return true;
