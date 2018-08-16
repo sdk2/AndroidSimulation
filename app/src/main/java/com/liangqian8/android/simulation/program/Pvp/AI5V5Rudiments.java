@@ -16,6 +16,7 @@ public class AI5V5Rudiments extends Program {
     private static final int heroListOffsetY = 210;
     private int goTime = 0;
     private int[][] hero;
+    private boolean scroll;
 
     public AI5V5Rudiments() {
     }
@@ -59,7 +60,7 @@ public class AI5V5Rudiments extends Program {
                 }
                 // 9.选择英雄
                 chooseHero();
-                
+
                 // 10.确定
                 RootShellCmd.simulateTap(1750, 1020);
 
@@ -93,10 +94,17 @@ public class AI5V5Rudiments extends Program {
         }
     }
 
+    private void scroll() throws InterruptedException {
+        RootShellCmd.simulateSwipe(heroListX + 3 * heroListOffsetX, heroListY + 3 * heroListOffsetY, heroListX, heroListY, 1000);
+        Thread.sleep(1000);
+    }
+
     private void chooseHero() throws InterruptedException {
-        for (int[] ints : hero) {
+        for (int i = 0, heroLength = hero.length; i < heroLength; i++) {
+            int[] ints = hero[i];
             RootShellCmd.simulateTap(450, 550);
             Thread.sleep(2000);
+            if (i == 0 && scroll) scroll();
             RootShellCmd.simulateTap(heroListX + ints[0] * heroListOffsetX, heroListY + ints[1] * heroListOffsetY);
             Thread.sleep(2000);
         }
@@ -174,6 +182,10 @@ public class AI5V5Rudiments extends Program {
 
     public void setGoTime(int goTime) {
         this.goTime = goTime;
+    }
+
+    public void setScroll(boolean scroll) {
+        this.scroll = scroll;
     }
 
     public void setHero(int[][] hero) {

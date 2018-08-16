@@ -93,6 +93,7 @@ public final class WindowUtil {
         guajiBtn.setOnClickListener(v -> {
             if (thread == null) {
                 setGoTime(editText1);
+                setScroll(editText2);
                 setHero(editText3);
                 thread = new Thread(runnable);
                 thread.start();
@@ -132,6 +133,12 @@ public final class WindowUtil {
             }
         });
         return view;
+    }
+
+    private static void setScroll(EditText editText2) {
+        if (editText2.getText().toString().equals("1")) {
+            runnable.setScroll(true);
+        }
     }
 
     private static void setGoTime(EditText editText1) {
