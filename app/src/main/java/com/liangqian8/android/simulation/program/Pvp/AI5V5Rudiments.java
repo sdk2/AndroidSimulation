@@ -58,16 +58,8 @@ public class AI5V5Rudiments extends Program {
                     }
                 }
                 // 9.选择英雄
-                //TODO 450 550 展开
-
-                RootShellCmd.simulateTap(450, 550);
-                Thread.sleep(2000);
-                RootShellCmd.simulateTap(123, 660);
-                Thread.sleep(2000);
-                RootShellCmd.simulateTap(450, 550);
-                Thread.sleep(1500);
-                RootShellCmd.simulateTap(1290, 688);
-                Thread.sleep(2000);
+                chooseHero();
+                
                 // 10.确定
                 RootShellCmd.simulateTap(1750, 1020);
 
@@ -98,6 +90,15 @@ public class AI5V5Rudiments extends Program {
             // 开始匹配
         } catch (InterruptedException e) {
 
+        }
+    }
+
+    private void chooseHero() throws InterruptedException {
+        for (int[] ints : hero) {
+            RootShellCmd.simulateTap(450, 550);
+            Thread.sleep(2000);
+            RootShellCmd.simulateTap(heroListX + ints[0] * heroListOffsetX, heroListY + ints[1] * heroListOffsetY);
+            Thread.sleep(2000);
         }
     }
 
@@ -179,16 +180,4 @@ public class AI5V5Rudiments extends Program {
         this.hero = hero;
     }
 
-    public void temp() {
-        try {
-            for (int[] ints : hero) {
-                RootShellCmd.simulateTap(450, 550);
-                Thread.sleep(2000);
-                RootShellCmd.simulateTap(heroListX + ints[0] * heroListOffsetX, heroListY + ints[1] * heroListOffsetY);
-                Thread.sleep(2000);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 }
