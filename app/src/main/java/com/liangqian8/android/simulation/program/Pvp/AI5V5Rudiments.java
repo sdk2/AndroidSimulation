@@ -25,9 +25,6 @@ public class AI5V5Rudiments extends Program {
     public void run() {
         try {
             // 1.判断是否在游戏首页
-            if (BitmapUtil.getBitmap().getPixel(10, 1060) != -15320747) {
-                return;
-            }
             // 2.对战模式
             RootShellCmd.simulateTap(400, 250);
             Thread.sleep(1500);
