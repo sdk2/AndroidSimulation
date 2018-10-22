@@ -82,10 +82,6 @@ public class AI5V5Rudiments extends Program {
                 }
             }
 
-            // 12.游戏结束，继续
-            // 继续
-            // 返回房间
-            // 开始匹配
         } catch (InterruptedException e) {
 
         }
@@ -115,7 +111,7 @@ public class AI5V5Rudiments extends Program {
                 if (Thread.currentThread().isInterrupted()) {
                     return;
                 }
-                // 装备 + 1,2技能
+                // 装备 + 1,2技能 + 装备
                 RootShellCmd.simulateTap(200, 430);
                 Thread.sleep(1);
                 RootShellCmd.simulateTap(1320, 840);
@@ -164,17 +160,6 @@ public class AI5V5Rudiments extends Program {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-    }
-
-    private void method() throws InterruptedException {
-        // 购买装备
-        RootShellCmd.simulateTap(200, 430);
-        Thread.sleep(1000);
-        // 加点1技能
-        RootShellCmd.simulateTap(1320, 840);
-        Thread.sleep(1000);
-        // 加点2技能
-        RootShellCmd.simulateTap(1440, 650);
     }
 
     public void setGoTime(int goTime) {
